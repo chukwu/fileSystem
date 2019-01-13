@@ -1,0 +1,197 @@
+
+$addFileWidth: 70px;
+$addFileWidthPreview: 450px;
+
+$gray: #cccccc;
+$lightgray: #f7f7f7;
+$white: #ffffff;
+$darkgray: #888888;
+$green: #51b678;
+$black: #333333;
+*{
+    font-family: Arial, Helvetica, sans-serif;
+}
+.display-flex {
+    display: flex;
+    &.display-inline-flex {
+        display: inline-flex;
+    }
+    flex-wrap: wrap;
+    &.row {
+        flex-direction: row;
+    }
+    &.flex-valign-center {
+        align-items: center;
+    }
+    &.flex-valign-start {
+        align-items: flex-start;
+    }
+    &.flex-valign-end {
+        align-items: flex-end;
+    }
+    &.flex-halign-center {
+        justify-content: center;
+    }
+    &.flex-halign-start {
+        justify-content: flex-start;
+    }
+    &.flex-halign-end {
+        justify-content: flex-end;
+    }
+    &.no-wrap {
+        flex-wrap: nowrap;
+    }
+    &.reverse {
+        flex-direction: row-reverse;
+    }
+    .biggest {
+        flex: 2;
+    }
+    .bigger {
+        flex: 1;
+    }
+    &.column {
+        flex-direction: column;
+    }
+}
+.prelative{
+    position: relative;
+}
+.object-fit{
+    height: $addFileWidth;
+    overflow: hidden;
+    img, video{
+        object-fit: cover;
+        width: $addFileWidth;
+        height: $addFileWidth;
+    }
+}
+.preview-upload{
+    background-color: $white;
+    border-radius: 10px;
+    padding-bottom: 18px;
+    margin-bottom: 13px;
+    padding-top: 20px;
+    border: 2px dotted $gray;
+    display: none;
+}
+.preview-object-fit{
+    overflow: hidden;
+    img, video{
+        max-height: $addFileWidthPreview;
+        max-width: 100%;
+        min-height: 200px;
+    }
+    iframe{
+        width: 600px;
+        height: 700px;
+        max-width: 100%;
+    }
+    @media screen and (max-width: 768px){
+        img, video{
+            height: auto;
+            width: 100%;
+        }
+        iframe{
+            width: 100%;
+            height: auto;
+        }        
+    }
+    
+    margin-bottom: 10px;
+}
+.progress-bar{
+    background-color: $green;
+    padding: 0 5px;
+    color: $lightgray;
+    text-align: center;
+    margin: 10px 0px;
+    transition: all 300ms linear;
+}
+.absolute-center{
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    text-align: center;
+}
+.add-file, .uploaded-file-container{
+    width: $addFileWidth;
+    height: $addFileWidth;
+    border: 2px dotted $gray;
+    border-radius: 10px;
+    background-color: $lightgray;
+    overflow: hidden;
+    position: relative;
+    .file-container{
+        input{
+            height: $addFileWidth;
+            opacity: 0;
+            z-index: 2;
+            cursor: pointer;
+        }
+        svg{
+            &#add{
+                width: 35px;
+                height: 35px;
+            }
+        }
+        color: $darkgray;
+        text-align: center;
+    }
+
+}
+.uploaded-file-container{
+    border: none;
+    margin: 0px 0px 0px 12px;
+    cursor: pointer;
+    .others{
+        .file-ext{
+            width: $addFileWidth;
+            height: $addFileWidth;
+            background-color: $black;
+            color: $white;
+            font-size: 1.8rem;
+            font-weight: 600;
+        }
+    }
+}
+.delete{
+    color: red;
+    border: thin solid $gray;
+    background-color: $lightgray;
+    border-radius: 8px;
+    padding: 5px;
+    text-align: center;
+    cursor: pointer;
+}
+.m-b-30{
+    margin-bottom: 30px !important;
+}
+.filedetails{
+    h3{
+        margin: 0px;
+    }
+    p{
+        margin: 5px;
+    }
+    margin-left: 10px;
+}
+.file-extension{
+    width: 50px;
+    height: 50px;
+    background-color: $black;
+    color: $white;
+    font-size: 1.5rem;
+    font-weight: 600;
+    border-radius: 10px;
+    padding: 5px
+}
+.file-upload-wrapper{
+    padding: 10px;
+    border: thin solid $gray;
+    border-radius: 10px;
+    background-color: $lightgray;
+}

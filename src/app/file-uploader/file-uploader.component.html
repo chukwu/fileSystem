@@ -1,0 +1,67 @@
+
+<div class="file-upload-wrapper">
+    <input type="hidden" [name]="inputName" [value]="finalResultString">
+    <div #previewDiv id="previewDiv" class="preview-upload">
+        <div class=" display-flex flex-halign-center" [ngSwitch]="whatFileType(previewFs)">
+            <div *ngSwitchCase="'image'" class="preview-object-fit">
+                <img style="max-width: 100%;border-radius:5px;" [src]="previewFs?.fileLocation | helper:'rewriteUrl'">
+            </div> 
+            <div *ngSwitchCase="'video'" class="preview-object-fit">
+                <video style="max-width: 100%;border-radius:5px;" controls="true" [poster]="previewFs?.videoThumbnail | helper:'rewriteUrl'" [src]="previewFs?.fileLocation | helper:'rewriteUrl'"></video>
+            </div> 
+            <div *ngSwitchCase="'pdf'" class="preview-object-fit">
+                <iframe style="max-width: 100%;border-radius:5px;" [src]="previewFs?.fileLocation | helper:'rewriteUrl' | helper:'sanitize'" frameborder="0"></iframe>
+                <!-- <img [src]="previewFs?.pdfImage | helper:'rewriteUrl'"> -->
+            </div>
+            <div *ngSwitchCase="'othervalid'" class="preview-object-fit">
+                
+            </div> 
+            <div *ngSwitchDefault class="others">
+                
+            </div>
+        </div>
+        <!--<div class="display-flex flex-valign-center flex-halign-center">
+            <div class="file-extension display-flex flex-valign-center flex-halign-center">{{previewFs?.fileExtension | helper:'fileExt'}}</div>
+            <div class="filedetails">
+                <h3>{{previewFs?.fileName}}</h3>
+                <p>{{previewFs?.fileSizeKB | helper:'fileSize'}}</p>
+                <div (click)="delete(previewFs)" class="delete">Delete</div>
+            </div>
+        </div>-->
+    </div>
+    <div class="progress-bar" *ngIf="(progress > 0 && progress < 100)" [style.width]="progress + '%'">{{progress + '%'}}</div> 
+    <div class="display-flex flex-valign-center">
+        <div *ngIf="!previewMode" class="add-file display-flex flex-valign-center flex-halign-center">
+            <div class="file-container">
+                <div class="absolute-center display-flex flex-valign-center flex-halign-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="add" x="0px" y="0px" viewBox="0 0 31.444 31.444" style="enable-background:new 0 0 31.444 31.444;" xml:space="preserve" width="512px" height="512px">
+                        <path d="M1.119,16.841c-0.619,0-1.111-0.508-1.111-1.127c0-0.619,0.492-1.111,1.111-1.111h13.475V1.127  C14.595,0.508,15.103,0,15.722,0c0.619,0,1.111,0.508,1.111,1.127v13.476h13.475c0.619,0,1.127,0.492,1.127,1.111  c0,0.619-0.508,1.127-1.127,1.127H16.833v13.476c0,0.619-0.492,1.127-1.111,1.127c-0.619,0-1.127-0.508-1.127-1.127V16.841H1.119z" fill="#333333"/>
+                    </svg>
+                </div>
+                <input type="file" (change)="onFileSelectChange($event)" name="" class="absolute-center" id="">
+            </div>        
+        </div>
+    
+    
+        <div *ngFor="let fs of fileSystems; let i = index" class="uploaded-file-container">
+            <div [ngSwitch]="whatFileType(fs)">
+                <div (click)="previewThis(fs)" *ngSwitchCase="'image'" class="object-fit">
+                    <img [src]="fs.fileLocation | helper:'rewriteUrl'">
+                </div> 
+                <div (click)="previewThis(fs)" *ngSwitchCase="'video'" class="object-fit">
+                    <img [src]="fs.videoThumbnail | helper:'rewriteUrl'">
+                </div> 
+                <div (click)="previewThis(fs)" *ngSwitchCase="'pdf'" [class.others]="!fs.pdfImage" class="object-fit">
+                    <img *ngIf="fs.pdfImage" [src]="fs.pdfImage | helper:'rewriteUrl'">
+                    <div *ngIf="!fs.pdfImage" class="file-ext display-flex flex-valign-center flex-halign-center">{{fs.fileExtension | helper:'fileExt'}}</div>
+                </div> 
+                <div (click)="previewThis(fs)" *ngSwitchCase="'othervalid'" class="object-fit">
+                    <img [src]="fs.otherFileThumbnail | helper:'rewriteUrl'">
+                </div> 
+                <div (click)="previewThis(fs)" *ngSwitchDefault class="others">
+                    <div class="file-ext display-flex flex-valign-center flex-halign-center">{{fs.fileExtension | helper:'fileExt'}}</div>
+                </div>           
+            </div>                                     
+        </div>
+    </div>
+</div>
