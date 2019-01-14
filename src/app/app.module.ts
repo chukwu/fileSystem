@@ -7,24 +7,28 @@ import { AppComponent } from './app.component';
 import { FileUploaderComponent } from './file-uploader/file-uploader.component';
 import { HttpClientModule } from '@angular/common/http';
 import { HelperPipe } from './helper.pipe';
+import { ChartComponent } from './chart/chart.component';
 @NgModule({
   declarations: [
     AppComponent,
     FileUploaderComponent,
-    HelperPipe
+    HelperPipe,
+    ChartComponent
   ],
   imports: [
     BrowserModule,HttpClientModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [XhrService,HttpClientModule],
-  entryComponents: [FileUploaderComponent],
+  entryComponents: [FileUploaderComponent, ChartComponent],
   exports:[HttpClientModule,HelperPipe]
 })
 export class AppModule {
   constructor(private injector: Injector) {}
   ngDoBootstrap() {
-    const el = createCustomElement(FileUploaderComponent, { injector: this.injector });
-    customElements.define('file-uploader', el);
+    const fl = createCustomElement(FileUploaderComponent, { injector: this.injector });
+    const chart = createCustomElement(ChartComponent, { injector: this.injector });
+    customElements.define('file-uploader', fl);
+    customElements.define('high-chart-comp', chart);
   }
 }

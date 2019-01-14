@@ -6,6 +6,8 @@
         "start": "ng serve",
         "build": "ng build",
         "build:elements": "ng build --prod --output-hashing none && node elements-build.js",
+        "build:buildplus": "ng build --prod --extraWebpackConfig webpack.extra.js --output-hashing none --single-bundle true && node elements-build.js",
+        "build:buildplussingle": "ng build --prod --extraWebpackConfig webpack.extra.js --output-hashing none && node elements-single-build.js",
         "serve": "http-server --gzip",
         "test": "ng test",
         "lint": "ng lint",
@@ -24,6 +26,7 @@
         "@angular/router": "~7.1.0",
         "core-js": "^2.5.4",
         "document-register-element": "^1.7.2",
+        "ngx-build-plus": "^7.6.0",
         "rxjs": "~6.3.3",
         "tslib": "^1.9.0",
         "zone.js": "~0.8.26"
