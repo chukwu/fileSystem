@@ -115,7 +115,7 @@ export class FileUploaderComponent implements OnInit {
           text: "Download",
           value: "download",
         } : null,
-        confirm: {
+        confirm: this.previewMode ? null :{
           text: "Delete",
           value: "remove",
         }
