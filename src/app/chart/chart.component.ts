@@ -35,12 +35,12 @@ export class ChartComponent implements OnInit {
   },{
     name: "column"
   },{
-    name: "cylinder"
+    name: "spline"
   }]
   constructor(private ngZone:NgZone) { }
 
   changeType(event:any, type:string){
-    console.log(event,type);
+    //console.log(event,type);
     this.type = type;
     this.redrawChart();
   }
@@ -100,7 +100,7 @@ export class ChartComponent implements OnInit {
     })
   }
 
-  change3D(event, param){
+  change3D(event:any, param:string){
 
     this.ngZone.run(()=>{
       this.options3d = {

@@ -15,6 +15,7 @@ import { ChartModule, HIGHCHARTS_MODULES } from 'angular-highcharts';
 import * as more from 'highcharts/highcharts-more.src';
 import * as exporting from 'highcharts/modules/exporting.src';
 import * as highchart3D from 'highcharts/highcharts-3d.src';
+import * as drilldown from 'highcharts/modules/drilldown.src';
 @NgModule({
   declarations: [
     AppComponent,
@@ -26,7 +27,7 @@ import * as highchart3D from 'highcharts/highcharts-3d.src';
     BrowserModule,HttpClientModule,ChartModule,FormsModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  providers: [XhrService,HttpClientModule, { provide: HIGHCHARTS_MODULES, useFactory: () => [ more, exporting,highchart3D ] }],
+  providers: [XhrService,HttpClientModule, { provide: HIGHCHARTS_MODULES, useFactory: () => [ more, exporting,highchart3D,drilldown ] }],
   entryComponents: [FileUploaderComponent, ChartComponent],
   exports:[HttpClientModule,HelperPipe]
 })
