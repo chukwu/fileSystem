@@ -8,6 +8,11 @@ import { FileUploaderComponent } from './file-uploader/file-uploader.component';
 import { HttpClientModule } from '@angular/common/http';
 import { HelperPipe } from './helper.pipe';
 import { ChartComponent } from './chart/chart.component';
+
+import { ChartModule, HIGHCHARTS_MODULES } from 'angular-highcharts';
+import * as more from 'highcharts/highcharts-more.src';
+import * as exporting from 'highcharts/modules/exporting.src';
+import * as highchart3D from 'highcharts/highcharts-3d.src';
 @NgModule({
   declarations: [
     AppComponent,
@@ -16,10 +21,10 @@ import { ChartComponent } from './chart/chart.component';
     ChartComponent
   ],
   imports: [
-    BrowserModule,HttpClientModule
+    BrowserModule,HttpClientModule,ChartModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  providers: [XhrService,HttpClientModule],
+  providers: [XhrService,HttpClientModule, { provide: HIGHCHARTS_MODULES, useFactory: () => [ more, exporting,highchart3D ] }],
   entryComponents: [FileUploaderComponent, ChartComponent],
   exports:[HttpClientModule,HelperPipe]
 })
