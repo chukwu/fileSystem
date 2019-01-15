@@ -9,6 +9,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { HelperPipe } from './helper.pipe';
 import { ChartComponent } from './chart/chart.component';
 
+import { FormsModule } from '@angular/forms';
+
 import { ChartModule, HIGHCHARTS_MODULES } from 'angular-highcharts';
 import * as more from 'highcharts/highcharts-more.src';
 import * as exporting from 'highcharts/modules/exporting.src';
@@ -21,7 +23,7 @@ import * as highchart3D from 'highcharts/highcharts-3d.src';
     ChartComponent
   ],
   imports: [
-    BrowserModule,HttpClientModule,ChartModule
+    BrowserModule,HttpClientModule,ChartModule,FormsModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [XhrService,HttpClientModule, { provide: HIGHCHARTS_MODULES, useFactory: () => [ more, exporting,highchart3D ] }],

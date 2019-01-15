@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter, ViewEncapsulation,NgZone, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, Input, ViewEncapsulation,NgZone } from '@angular/core';
 import { Chart } from 'angular-highcharts';
 
 @Component({
@@ -10,6 +10,9 @@ import { Chart } from 'angular-highcharts';
 export class ChartComponent implements OnInit {
   chart:Chart = null; 
   series:Array<{}>;
+  alpha:number = 0;
+  beta:number = 0;
+  depth:number = 60;
   @Input() titleText:string;
   @Input() subtitleTextHtml:string;
   @Input() yAxisText:string;
@@ -18,12 +21,29 @@ export class ChartComponent implements OnInit {
   @Input() toolTipSuffix:string;
   @Input() categories:Array<string>
   @Input() options3d:{} = null;
+  @Input() headercolor:string = "red";
 
   @Input() set setSeries(value:string) {
     this.series = JSON.parse(value);
   }
-  constructor() { }
+  chartTypes:Array<any> = [{
+    name: "line"
+  },{
+    name: "area"
+  },{
+    name: "bar"
+  },{
+    name: "column"
+  },{
+    name: "cylinder"
+  }]
+  constructor(private ngZone:NgZone) { }
 
+  changeType(event:any, type:string){
+    console.log(event,type);
+    this.type = type;
+    this.redrawChart();
+  }
   drawChart(){
     this.chart = new Chart({
       chart: {
@@ -79,6 +99,27 @@ export class ChartComponent implements OnInit {
       series: this.series
     })
   }
+
+  change3D(event, param){
+
+    this.ngZone.run(()=>{
+      this.options3d = {
+        enabled: true,
+        alpha: this.alpha,
+        beta: this.beta,
+        depth: this.depth,
+        viewDistance: 25
+      }  
+
+      this.drawChart();
+    })
+
+  }
+  redrawChart(){
+    this.ngZone.run(()=>{
+      this.drawChart();
+    })
+  }
   ngOnInit() {
     this.titleText = "My chart";
     this.yAxisText = "My Y Axis title";
@@ -88,19 +129,26 @@ export class ChartComponent implements OnInit {
     this.subtitleTextHtml = 'Source: <a href="https://en.wikipedia.org/wiki/World_population">Wikipedia.org</a>';
     this.series = [
       {
-        name: 'Line 1',
-        data: [1, 2, 3]
+        name: 'Series name',
+        data: [10000000, 27890000, 3656577, 3656577, 5000000, 45000]
+      },{
+        name: 'Series name',
+        data: [100000, 2790000, 356577, 3656577, 500000, 45000]
       }
     ];
     this.options3d = {
-        enabled: true,
-        alpha: 15,
-        beta: 15,
-        depth: 50,
+        enabled: false,
+        alpha: this.alpha,
+        beta: this.beta,
+        depth: this.depth,
         viewDistance: 25
     }
-    this.categories = ['Africa', 'America', 'Asia'];
+    this.categories = ['Africa', 'America', 'Asia', 'Antartica', 'Australia', 'Europe'];
     this.drawChart();
+
+    this.chart.ref$.subscribe(()=>{
+
+    });
   }
 
 }

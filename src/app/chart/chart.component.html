@@ -1,1 +1,16 @@
-<div [chart]="chart"></div>
+<!-- <div class="optionheader" [style.backgroundColor]="headercolor"></div> -->
+<div class="display-flex no-wrap">
+    <div class="bigger white-bg">
+            <div [chart]="chart"></div>
+    </div>
+    <div class="options gray-bg">
+        <div class="display-flex flex-halign-center button-list">
+            <div *ngFor="let item of chartTypes" (click)="changeType($event,item.name)">{{item.name}}</div>
+        </div>
+        <div class="options-slider">
+            <input [(ngModel)]="alpha" (input)="change3D($event, 'alpha')" title="Alpha angle" id="alpha_angle" type='range' min='0' max='45' />
+            <input [(ngModel)]="beta" (input)="change3D($event, 'beta')" title="Beta angle" id="beta_angle" type='range' min='-45' max='45' />
+            <input [(ngModel)]="depth"  (input)="change3D($event, 'depth')" title="Depth" id="depth" type='range' min='20' max='100' />
+        </div>
+    </div>
+</div>
