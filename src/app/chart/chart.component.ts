@@ -17,12 +17,14 @@ export class ChartComponent implements OnInit {
   @Input() subtitleTextHtml:string;
   @Input() yAxisText:string;
   @Input() xAxisText:string;
-  @Input() type:string = "line";
+  @Input() type:string = "spline";
   @Input() toolTipSuffix:string;
-  @Input() categories:Array<string>
+  @Input() categories:Array<string>;
+  @Input() categoriesType:string = "category";
   @Input() options3d:{} = null;
   @Input() headercolor:string = "red";
 
+  @Input() drilldown:any;
   @Input() set setSeries(value:string) {
     this.series = JSON.parse(value);
   }
@@ -57,6 +59,7 @@ export class ChartComponent implements OnInit {
           text: this.subtitleTextHtml
       },
       xAxis: {
+          type: this.categoriesType,
           categories: this.categories, //what actually shows on X
           title: {
               text: this.xAxisText
@@ -96,7 +99,8 @@ export class ChartComponent implements OnInit {
       credits: {
         enabled: false
       },
-      series: this.series
+      series: this.series,
+      drilldown: this.drilldown
     })
   }
 
@@ -129,13 +133,53 @@ export class ChartComponent implements OnInit {
     this.subtitleTextHtml = 'Source: <a href="https://en.wikipedia.org/wiki/World_population">Wikipedia.org</a>';
     this.series = [
       {
-        name: 'Series name',
-        data: [10000000, 27890000, 3656577, 3656577, 5000000, 45000]
-      },{
-        name: 'Series name',
-        data: [100000, 2790000, 356577, 3656577, 500000, 45000]
+        name: 'Series 1',
+        data: [{
+          "name": "Point",
+          "y": 62.74,
+          "drilldown": "Point"
+        }, {
+          "name": "Point 2",
+          "y": 6.74,
+          "drilldown": "Point 2"
+        }, {
+          "name": "Point 3",
+          "y": 56.74,
+          "drilldown": "Point 3"
+        }, {
+          "name": "Point 4",
+          "y": 22.74,
+          "drilldown": null
+        }, {
+          "name": "Point 5",
+          "y": 72.74,
+          "drilldown": "Point 5"
+        }, {
+          "name": "Point 6",
+          "y": 82.74,
+          "drilldown": "Point 6"
+        }]
       }
     ];
+    this.drilldown = {
+      series: [
+        {
+          name: "Point",
+          id: "Point",
+          data: [
+            //x and y axis  
+            ["Sub point", 29], ["Sub point 2", 29], ["Sub point 3", 29], ["Sub point 4", 29],          
+          ]
+        },{
+          name: "Point 2",
+          id: "Point 2",
+          data: [
+            //x and y axis  
+            ["Sub point", 29], ["Sub point 2", 29], ["Sub point 3", 29], ["Sub point 4", 29],          
+          ]
+        }
+      ]
+    }
     this.options3d = {
         enabled: false,
         alpha: this.alpha,
