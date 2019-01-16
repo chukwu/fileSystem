@@ -14,12 +14,20 @@
 .chart-div{
     border: 1px solid #e6e6e6;
 }
+.highcharts-container{
+    width: auto !important;
+    max-width: 100% !important;
+    .highcharts-root{
+        max-width: 100% !important;
+    }
+}
 .options{
     padding: 10px;
     margin-left: 10px;
     max-width: 300px;
 }
 .button-list{
+    margin-bottom: 15px;
     div{
         padding: 4px 10px;
         border-radius: 4px;

@@ -21,7 +21,13 @@ export class ChartComponent implements OnInit {
   @Input() toolTipSuffix:string;
   @Input() categories:Array<string>;
   @Input() categoriesType:string = "category";
-  @Input() options3d:{} = null;
+  @Input() options3d:any = {
+      enabled: true,
+      alpha: this.alpha,
+      beta: this.beta,
+      depth: this.depth,
+      viewDistance: 25
+  };
   @Input() headercolor:string = "red";
 
   @Input() drilldown:any;
@@ -49,6 +55,8 @@ export class ChartComponent implements OnInit {
     //console.log(event,type);
     this.type = type;
     this.redrawChart();
+
+    this.chart.ref$
   }
   drawChart(){
     this.chart = new Chart({
@@ -101,6 +109,18 @@ export class ChartComponent implements OnInit {
               dataLabels: {
                   enabled: true
               }
+          },
+          column: {
+            depth: 25
+          },pie: {
+            //innerSize: 100,
+            allowPointSelect: true,
+            cursor: 'pointer',
+            depth: 35,
+            dataLabels: {
+                enabled: true,
+                format: '{point.name}'
+            }
           }
       },
       legend: {
@@ -125,6 +145,11 @@ export class ChartComponent implements OnInit {
   @HostListener('window:resize', ['$event'])
   onResize(event:any) {
     console.log(event.target.innerWidth);
+    this.chart.ref$.subscribe((chart:any)=>{
+      chart.redraw(false);
+      //this.drawChart();
+    });
+
   }
 
   change3D(event:any, param:string){
@@ -137,8 +162,14 @@ export class ChartComponent implements OnInit {
         depth: this.depth,
         viewDistance: 25
       }  
-
-      this.drawChart();
+      this.chart.ref$.subscribe((chart:any)=>{
+        console.log(chart);
+        chart.options.chart.options3d.enabled = true;
+        chart.options.chart.options3d.alpha = this.alpha;
+        chart.options.chart.options3d.beta = this.beta;
+        chart.options.chart.options3d.depth = this.depth;
+        chart.redraw(false);
+      });
     })
 
   }
@@ -203,19 +234,11 @@ export class ChartComponent implements OnInit {
         }
       ]
     }
-    this.options3d = {
-        enabled: false,
-        alpha: this.alpha,
-        beta: this.beta,
-        depth: this.depth,
-        viewDistance: 25
-    }
+
     this.categories = ['Africa', 'America', 'Asia', 'Antartica', 'Australia', 'Europe'];
     this.drawChart();
 
-    this.chart.ref$.subscribe(()=>{
 
-    });
   }
 
 }
