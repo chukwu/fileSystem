@@ -144,7 +144,6 @@ export class ChartComponent implements OnInit {
 
   @HostListener('window:resize', ['$event'])
   onResize(event:any) {
-    console.log(event.target.innerWidth);
     this.chart.ref$.subscribe((chart:any)=>{
       chart.redraw(false);
       //this.drawChart();
@@ -163,7 +162,6 @@ export class ChartComponent implements OnInit {
         viewDistance: 25
       }  
       this.chart.ref$.subscribe((chart:any)=>{
-        console.log(chart);
         chart.options.chart.options3d.enabled = true;
         chart.options.chart.options3d.alpha = this.alpha;
         chart.options.chart.options3d.beta = this.beta;

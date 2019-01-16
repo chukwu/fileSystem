@@ -5,7 +5,7 @@
         "ng": "ng",
         "start": "ng serve",
         "build": "ng build",
-        "build:elements": "ng build --prod --output-hashing none && node elements-build.js",
+        "build:elements": "ng build --prod --build-optimizer --output-hashing none && node elements-build.js",
         "build:buildplus": "ng build --prod --extraWebpackConfig webpack.extra.js --output-hashing none --single-bundle true && node elements-build.js",
         "build:buildplussingle": "ng build --prod --extraWebpackConfig webpack.extra.js --output-hashing none && node elements-single-build.js",
         "serve": "http-server --gzip",
