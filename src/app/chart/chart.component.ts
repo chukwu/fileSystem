@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ViewEncapsulation,NgZone } from '@angular/core';
+import { Component, OnInit, Input, ViewEncapsulation,NgZone, HostListener } from '@angular/core';
 import { Chart } from 'angular-highcharts';
 
 @Component({
@@ -38,6 +38,10 @@ export class ChartComponent implements OnInit {
     name: "column"
   },{
     name: "spline"
+  },{
+    name: "pie"
+  },{
+    name: "areaspline"
   }]
   constructor(private ngZone:NgZone) { }
 
@@ -75,6 +79,20 @@ export class ChartComponent implements OnInit {
               overflow: 'justify'
           }
       },
+      responsive: {
+        rules: [{
+            condition: {
+                maxWidth: 500
+            },
+            chartOptions: {
+                legend: {
+                    align: 'center',
+                    verticalAlign: 'bottom',
+                    layout: 'horizontal'
+                }
+            }
+        }]
+    },
       tooltip: {
           valueSuffix: this.toolTipSuffix
       },
@@ -90,7 +108,7 @@ export class ChartComponent implements OnInit {
           align: 'right',
           verticalAlign: 'top',
           x: -40,
-          y: 80,
+          y: 0,
           floating: true,
           borderWidth: 1,
           backgroundColor: ('#FFFFFF'),
@@ -102,6 +120,11 @@ export class ChartComponent implements OnInit {
       series: this.series,
       drilldown: this.drilldown
     })
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event:any) {
+    console.log(event.target.innerWidth);
   }
 
   change3D(event:any, param:string){
