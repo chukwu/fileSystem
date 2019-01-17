@@ -14,6 +14,7 @@ export class ChartComponent implements OnInit {
   beta:number = 0;
   depth:number = 60;
   @Input() titleText:string;
+  @Input() mode3d:boolean = true;
   @Input() subtitleTextHtml:string;
   @Input() yAxisText:string;
   @Input() xAxisText:string;
@@ -34,20 +35,44 @@ export class ChartComponent implements OnInit {
   @Input() set setSeries(value:string) {
     this.series = JSON.parse(value);
   }
+  @Input() set toggleOptions(value:boolean) {
+    this.ngZone.run(()=>{
+      this.showOptionsPanel = value;
+    })
+    setTimeout(()=>{
+      this.redrawChart();
+    },0)
+
+  }
+  changeToggle(event:any){
+    console.log(this.mode3d);
+    this.options3d.enabled = this.mode3d;
+    setTimeout(()=>{
+      this.redrawChart();
+    },0)
+  }
+  showOptionsPanel:boolean = true;
   chartTypes:Array<any> = [{
-    name: "line"
+    name: "line",
+    caption: "Line"
   },{
-    name: "area"
+    name: "area",
+    caption: "Area"
   },{
-    name: "bar"
+    name: "bar",
+    caption: "Bar"
   },{
-    name: "column"
+    name: "column",
+    caption: "Column"
   },{
-    name: "spline"
+    name: "spline",
+    caption: "Spline"
   },{
-    name: "pie"
+    name: "pie",
+    caption: "Pie"
   },{
-    name: "areaspline"
+    name: "areaspline",
+    caption: "Area Spline"
   }]
   constructor(private ngZone:NgZone) { }
 
@@ -55,8 +80,6 @@ export class ChartComponent implements OnInit {
     //console.log(event,type);
     this.type = type;
     this.redrawChart();
-
-    this.chart.ref$
   }
   drawChart(){
     this.chart = new Chart({
@@ -124,10 +147,10 @@ export class ChartComponent implements OnInit {
           }
       },
       legend: {
-          layout: 'vertical',
-          align: 'right',
-          verticalAlign: 'top',
-          x: -40,
+          layout: 'horizontal',
+          align: 'center',
+          verticalAlign: 'bottom',
+          x: 0,
           y: 0,
           floating: true,
           borderWidth: 1,

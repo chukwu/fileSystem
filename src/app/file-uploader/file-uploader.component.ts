@@ -58,10 +58,10 @@ export class FileUploaderComponent implements OnInit {
   }
 
   clearStorage(){
-    // window.localStorage.removeItem("fileSystems");
-    // this.ngZone.run(() => {
-    //   this.fileSystems = [];
-    // })
+    window.localStorage.removeItem("fileSystems");
+    this.ngZone.run(() => {
+      this.fileSystems = [];
+    })
     this.result.emit(this.fileSystems);
   }
 
